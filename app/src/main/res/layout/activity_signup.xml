@@ -2,10 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_margin="16dp"
-    tools:context=".activities.LoginActivity">
+    android:layout_height="match_parent">
 
     <EditText
         android:id="@+id/etUsername"
@@ -15,29 +12,29 @@
         android:hint="username" />
 
     <EditText
-        android:id="@+id/etPassword"
+        android:id="@+id/etEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etUsername"
+        android:layout_marginTop="10dp"
+        android:ems="10"
+        android:hint="email" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etEmail"
         android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="password"
         android:inputType="textPassword" />
 
     <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnSignup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etPassword"
         android:layout_marginTop="10dp"
-        android:text="Login" />
-
-    <Button
-        android:id="@+id/btnSignup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/btnLogin"
-        android:layout_marginTop="50dp"
         android:text="Signup" />
-
 </RelativeLayout>

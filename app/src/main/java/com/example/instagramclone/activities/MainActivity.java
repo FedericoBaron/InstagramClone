@@ -1,4 +1,4 @@
-package com.example.instagramclone;
+package com.example.instagramclone.activities;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,6 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.instagramclone.R;
 import com.example.instagramclone.fragments.ComposeFragment;
 import com.example.instagramclone.fragments.PostsFragment;
 import com.example.instagramclone.fragments.ProfileFragment;
