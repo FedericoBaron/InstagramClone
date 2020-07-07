@@ -26,6 +26,7 @@ import com.example.instagramclone.R;
 import com.example.instagramclone.fragments.ComposeFragment;
 import com.example.instagramclone.fragments.PostsFragment;
 import com.example.instagramclone.fragments.ProfileFragment;
+import com.example.instagramclone.fragments.SettingsFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationItemView;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.FindCallback;
@@ -62,6 +63,9 @@ public class MainActivity extends AppCompatActivity {
                         break;
                     case R.id.action_compose:
                         fragment = new ComposeFragment();
+                        break;
+                    case R.id.action_settings:
+                        fragment = new SettingsFragment();
                         break;
                     case R.id.action_profile:
                     default:

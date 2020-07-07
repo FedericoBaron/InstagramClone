@@ -12,12 +12,14 @@ import java.util.List;
 
 public class ProfileFragment extends PostsFragment{
 
+    private static final String TAG = "ProfileFragment";
+
     @Override
     protected void queryPosts() {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
 
-        // Only show posts that are from current user
+        // Only show posts that are from the user
         query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
 
         // Set a limit of 20 posts

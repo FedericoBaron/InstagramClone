@@ -30,7 +30,7 @@ import java.util.List;
  */
 public class PostsFragment extends Fragment {
 
-    public static final String TAG = "PostsFragment";
+    private static final String TAG = "PostsFragment";
 
     private RecyclerView rvPosts;
     protected PostsAdapter adapter;
