@@ -8,6 +8,13 @@
     tools:context=".MainActivity"
     android:layout_margin="16dp">
 
+   <FrameLayout
+       android:id="@+id/flContainer"
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:layout_above="@id/bottomNavigation"
+       />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="match_parent"
