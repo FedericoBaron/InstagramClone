@@ -35,6 +35,7 @@ public class SettingsFragment extends Fragment {
     private ImageView profilePicture;
     private ParseUser currentUser;
     private Button btnUpdateProfile;
+    private Button btnChangePassword;
 
     private static final String KEY_PROFILE_PIC = "profilePicture";
 //    private static final String KEY_USERNAME = "username";
@@ -62,6 +63,7 @@ public class SettingsFragment extends Fragment {
         etEmail = view.findViewById(R.id.etEmail);
         profilePicture = view.findViewById(R.id.profilePicture);
         btnUpdateProfile = view.findViewById(R.id.btnUpdateProfile);
+        btnChangePassword = view.findViewById(R.id.btnChangePassword);
 
         // Gets the person who's logged in
         currentUser = ParseUser.getCurrentUser();
@@ -86,6 +88,9 @@ public class SettingsFragment extends Fragment {
         // Listener for update profile
         updateProfileListener();
 
+        // Listener for password change
+        changePasswordListener();
+
         // Listens for logout button click
         logoutListener();
     }
@@ -96,22 +101,20 @@ public class SettingsFragment extends Fragment {
             public void onClick(View v) {
                 currentUser.setUsername(etUsername.getText().toString());
                 currentUser.setEmail(etEmail.getText().toString());
-
-                currentUser.saveInBackground(new SaveCallback() {
-                    @Override
-                    public void done(ParseException e) {
-                        if(e != null){
-                            Log.e(TAG, "Error while saving", e);
-                            Toast.makeText(getContext(), "Error updating profile!", Toast.LENGTH_SHORT).show();
-                        }
-                        Log.i(TAG, "update profile save was successful!");
-                        Toast.makeText(getContext(), "Updated profile!", Toast.LENGTH_SHORT).show();
-                    }
-                });
+                save();
             }
         });
     }
 
+    private void changePasswordListener() {
+        btnChangePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentUser.setPassword(etPassword.getText().toString());
+                save();
+            }
+        });
+    }
 
     private void logoutListener(){
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -126,6 +129,20 @@ public class SettingsFragment extends Fragment {
 
                 // Prevent people from going back after logging out
                 getActivity().finish();
+            }
+        });
+    }
+
+    private void save(){
+        currentUser.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if(e != null){
+                    Log.e(TAG, "Error while saving", e);
+                    Toast.makeText(getContext(), "Update unsuccessful!", Toast.LENGTH_SHORT).show();
+                }
+                Log.i(TAG, "update save was successful!");
+                Toast.makeText(getContext(), "Update successful", Toast.LENGTH_SHORT).show();
             }
         });
     }
