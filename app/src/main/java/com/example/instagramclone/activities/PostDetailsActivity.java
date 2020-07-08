@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
 import com.example.instagramclone.Post;
+import com.example.instagramclone.PostsAdapter;
 import com.example.instagramclone.R;
 import com.parse.ParseFile;
 
@@ -19,6 +20,7 @@ public class PostDetailsActivity extends AppCompatActivity {
     private TextView tvUsername;
     private ImageView ivImage;
     private TextView tvDescription;
+    private TextView timestamp;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -28,6 +30,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         tvUsername = findViewById(R.id.tvUsername);
         ivImage = findViewById(R.id.ivImage);
         tvDescription = findViewById(R.id.tvDescription);
+        timestamp = findViewById(R.id.timestamp);
 
         // Unwrap the movie passed in via intent, using its simple name as a key
         post = (Post) Parcels.unwrap(getIntent().getParcelableExtra(Post.class.getSimpleName()));
@@ -38,5 +41,6 @@ public class PostDetailsActivity extends AppCompatActivity {
         if(image != null) {
             Glide.with(this).load(post.getImage().getUrl()).into(ivImage);
         }
+        timestamp.setText(PostsAdapter.getRelativeTimeAgo(post.getDate()));
     }
 }
