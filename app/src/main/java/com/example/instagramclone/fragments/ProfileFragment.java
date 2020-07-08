@@ -2,7 +2,7 @@ package com.example.instagramclone.fragments;
 
 import android.util.Log;
 
-import com.example.instagramclone.Post;
+import com.example.instagramclone.models.Post;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;

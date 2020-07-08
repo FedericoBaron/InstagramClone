@@ -22,7 +22,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.instagramclone.Post;
+import com.example.instagramclone.models.Post;
 import com.example.instagramclone.R;
 import com.parse.ParseException;
 import com.parse.ParseFile;

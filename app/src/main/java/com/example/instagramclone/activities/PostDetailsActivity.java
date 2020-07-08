@@ -7,7 +7,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.bumptech.glide.Glide;
-import com.example.instagramclone.Post;
+import com.example.instagramclone.models.Post;
 import com.example.instagramclone.PostsAdapter;
 import com.example.instagramclone.R;
 import com.parse.ParseFile;
