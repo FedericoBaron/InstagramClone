@@ -34,6 +34,7 @@
         </activity>
         <activity android:name=".activities.MainActivity"></activity>
         <activity android:name=".activities.SignupActivity"></activity>
+        <activity android:name=".activities.PostDetailsActivity"></activity>
     </application>
 
 </manifest>
