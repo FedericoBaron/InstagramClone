@@ -93,7 +93,8 @@ public class SettingsFragment extends Fragment {
             Glide.with(getContext())
                     .load(currentUser.getParseFile(KEY_PROFILE_PIC).getUrl())
                     .fitCenter()
-                    .transform(new RoundedCornersTransformation(radius, margin))
+                    .circleCrop()
+                    //.transform(new RoundedCornersTransformation(radius, margin))
                     .into(profilePicture);
         }
 
@@ -161,6 +162,12 @@ public class SettingsFragment extends Fragment {
                 if(e != null){
                     Log.e(TAG, "Error while saving", e);
                     Toast.makeText(getContext(), "Update unsuccessful!", Toast.LENGTH_SHORT).show();
+                    Glide.with(getContext())
+                            .load(currentUser.getParseFile(KEY_PROFILE_PIC).getUrl())
+                            .fitCenter()
+                            .circleCrop()
+                            //.transform(new RoundedCornersTransformation(radius, margin))
+                            .into(profilePicture);
                 }
                 Log.i(TAG, "update save was successful!");
                 Toast.makeText(getContext(), "Update successful", Toast.LENGTH_SHORT).show();
