@@ -42,10 +42,11 @@ public class PostsFragment extends Fragment {
     private RecyclerView rvPosts;
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
-    private SwipeRefreshLayout swipeContainer;
+    protected SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
     private LinearLayoutManager layoutManager;
     private int totalPosts = 5;
+    protected static final int NEW_POSTS = 5;
 
     public PostsFragment() {
         // Required empty public constructor
@@ -102,9 +103,9 @@ public class PostsFragment extends Fragment {
     }
 
     // Loads more posts when we reach the bottom of TL
-    private void loadMoreData() {
+    protected void loadMoreData() {
         Log.i(TAG, "Loading more data");
-        totalPosts = totalPosts + 5;
+        totalPosts = totalPosts + NEW_POSTS;
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
 
