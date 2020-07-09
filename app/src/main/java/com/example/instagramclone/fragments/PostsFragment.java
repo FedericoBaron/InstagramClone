@@ -105,7 +105,33 @@ public class PostsFragment extends Fragment {
     private void loadMoreData() {
         Log.i(TAG, "Loading more data");
         totalPosts = totalPosts + 5;
-        queryPosts();
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+
+        // Set a limit
+        query.setLimit(totalPosts);
+
+        // Sort by created at
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if(e != null){
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+                for(Post post: posts){
+                    Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
+                }
+
+                //Now we call setRefreshing(false) to signal refresh has finished
+                swipeContainer.setRefreshing(false);
+
+                // Add posts to adapter
+                adapter.setAll(posts);
+                adapter.notifyItemRangeInserted(posts.size()-5, posts.size());
+            }
+        });
     }
 
 
