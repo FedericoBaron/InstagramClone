@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.instagramclone.EndlessRecyclerViewScrollListener;
 import com.example.instagramclone.models.Post;
 import com.example.instagramclone.PostsAdapter;
 import com.example.instagramclone.R;
@@ -21,8 +22,13 @@ import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
 import java.util.ArrayList;
 import java.util.List;
+
+import okhttp3.Headers;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -37,6 +43,9 @@ public class PostsFragment extends Fragment {
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
     private SwipeRefreshLayout swipeContainer;
+    private EndlessRecyclerViewScrollListener scrollListener;
+    private LinearLayoutManager layoutManager;
+    private int totalPosts = 5;
 
     public PostsFragment() {
         // Required empty public constructor
@@ -64,6 +73,7 @@ public class PostsFragment extends Fragment {
 
         // Set the layout manager on the recycler view
         rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        layoutManager = (LinearLayoutManager) rvPosts.getLayoutManager();
 
         // Lookup the swipe container view
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
@@ -71,10 +81,33 @@ public class PostsFragment extends Fragment {
         // Listener for refreshing timeline
         refreshListener();
 
+        createScrollListener();
+
         // Gets all the posts for the timeline
         queryPosts();
 
     }
+
+    private void createScrollListener() {
+        scrollListener = new EndlessRecyclerViewScrollListener(layoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                Log.i(TAG, "onLoadMore: " + page);
+                loadMoreData();
+            }
+        };
+
+        // Adds the scroll listener to the RV
+        rvPosts.addOnScrollListener(scrollListener);
+    }
+
+    // Loads more posts when we reach the bottom of TL
+    private void loadMoreData() {
+        Log.i(TAG, "Loading more data");
+        totalPosts = totalPosts + 5;
+        queryPosts();
+    }
+
 
     private void refreshListener(){
         // Setup refresh listener which triggers new data loading
@@ -101,8 +134,8 @@ public class PostsFragment extends Fragment {
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
 
-        // Set a limit of 20 posts
-        query.setLimit(20);
+        // Set a limit
+        query.setLimit(totalPosts);
 
         // Sort by created at
         query.addDescendingOrder(Post.KEY_CREATED_AT);
