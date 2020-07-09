@@ -50,6 +50,7 @@ public class SettingsFragment extends Fragment {
     private String photoFileName = "photo.jpg";
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private static final String KEY_PROFILE_PIC = "profilePicture";
+    private View view;
 //    private static final String KEY_USERNAME = "username";
 //    private static final String KEY_EMAIL = "email";
 
@@ -68,31 +69,13 @@ public class SettingsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Sets variables to views
-        btnLogout = view.findViewById(R.id.btnLogout);
-        etUsername = view.findViewById(R.id.etUsername);
-        etPassword = view.findViewById(R.id.etPassword);
-        etEmail = view.findViewById(R.id.etEmail);
-        profilePicture = view.findViewById(R.id.profilePicture);
-        btnUpdateProfile = view.findViewById(R.id.btnUpdateProfile);
-        btnChangePassword = view.findViewById(R.id.btnChangePassword);
+        this.view = view;
 
-        // Gets the person who's logged in
-        currentUser = ParseUser.getCurrentUser();
+        // Connects frontend to backend
+        wireUI();
 
-        // Sets info to match that user
-        etUsername.setText(currentUser.getUsername());
-        etEmail.setText(currentUser.getEmail());
-        ParseFile image = currentUser.getParseFile(KEY_PROFILE_PIC);
-        if(image != null) {
-            Glide.with(getContext())
-                    .load(currentUser.getParseFile(KEY_PROFILE_PIC).getUrl())
-                    .fitCenter()
-                    .circleCrop()
-                    .into(profilePicture);
-        }
-
-
+        // Sets up the profile
+        setProfileInfo();
 
         // Listener for update profile
         updateProfileListener();
@@ -110,6 +93,35 @@ public class SettingsFragment extends Fragment {
             }
 
         });
+    }
+
+    private void setProfileInfo(){
+        // Gets the person who's logged in
+        currentUser = ParseUser.getCurrentUser();
+
+        // Sets info to match that user
+        etUsername.setText(currentUser.getUsername());
+        etEmail.setText(currentUser.getEmail());
+        ParseFile image = currentUser.getParseFile(KEY_PROFILE_PIC);
+        if(image != null) {
+            Glide.with(getContext())
+                    .load(currentUser.getParseFile(KEY_PROFILE_PIC).getUrl())
+                    .fitCenter()
+                    .circleCrop()
+                    .into(profilePicture);
+        }
+
+    }
+
+    // Sets variables to views
+    private void wireUI(){
+        btnLogout = view.findViewById(R.id.btnLogout);
+        etUsername = view.findViewById(R.id.etUsername);
+        etPassword = view.findViewById(R.id.etPassword);
+        etEmail = view.findViewById(R.id.etEmail);
+        profilePicture = view.findViewById(R.id.profilePicture);
+        btnUpdateProfile = view.findViewById(R.id.btnUpdateProfile);
+        btnChangePassword = view.findViewById(R.id.btnChangePassword);
     }
 
     private void updateProfileListener() {
@@ -150,21 +162,19 @@ public class SettingsFragment extends Fragment {
         });
     }
 
+    // Saves currentUser into backend
     private void save(){
         currentUser.saveInBackground(new SaveCallback() {
+
             @Override
             public void done(ParseException e) {
                 if(e != null){
                     Log.e(TAG, "Error while saving", e);
                     Toast.makeText(getContext(), "Update unsuccessful!", Toast.LENGTH_SHORT).show();
-                    Glide.with(getContext())
-                            .load(currentUser.getParseFile(KEY_PROFILE_PIC).getUrl())
-                            .fitCenter()
-                            .circleCrop()
-                            .into(profilePicture);
                 }
                 Log.i(TAG, "update save was successful!");
                 Toast.makeText(getContext(), "Update successful", Toast.LENGTH_SHORT).show();
+                setProfileInfo();
             }
         });
     }
@@ -203,6 +213,7 @@ public class SettingsFragment extends Fragment {
                 profilePicture.setImageBitmap(takenImage);
                 currentUser.put("profilePicture", new ParseFile(photoFile));
                 save();
+
             } else { // Result was a failure
                 Toast.makeText(getContext(), "Picture wasn't taken!", Toast.LENGTH_SHORT).show();
             }
