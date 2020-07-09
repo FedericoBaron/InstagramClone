@@ -31,7 +31,6 @@ import com.parse.SaveCallback;
 
 import java.io.File;
 
-import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 import static android.app.Activity.RESULT_OK;
 
@@ -86,17 +85,13 @@ public class SettingsFragment extends Fragment {
         etEmail.setText(currentUser.getEmail());
         ParseFile image = currentUser.getParseFile(KEY_PROFILE_PIC);
         if(image != null) {
-            //Glide.with(getContext()).load(currentUser.getParseFile(KEY_PROFILE_PIC).getUrl()).into(profilePicture);
-            // Binds image to ViewHolder with rounded corners
-            int radius = 360; // corner radius, higher value = more rounded
-            int margin = 0; // crop margin, set to 0 for corners with no crop
             Glide.with(getContext())
                     .load(currentUser.getParseFile(KEY_PROFILE_PIC).getUrl())
                     .fitCenter()
                     .circleCrop()
-                    //.transform(new RoundedCornersTransformation(radius, margin))
                     .into(profilePicture);
         }
+
 
 
         // Listener for update profile
@@ -166,7 +161,6 @@ public class SettingsFragment extends Fragment {
                             .load(currentUser.getParseFile(KEY_PROFILE_PIC).getUrl())
                             .fitCenter()
                             .circleCrop()
-                            //.transform(new RoundedCornersTransformation(radius, margin))
                             .into(profilePicture);
                 }
                 Log.i(TAG, "update save was successful!");

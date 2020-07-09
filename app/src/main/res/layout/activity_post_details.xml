@@ -10,11 +10,11 @@
         android:id="@+id/tvUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginLeft="0dp"
+        android:layout_marginTop="5dp"
+        android:layout_toEndOf="@+id/profilePicture"
         tools:text="Federico" />
 
     <ImageView
@@ -23,7 +23,7 @@
         android:layout_height="300dp"
         android:layout_below="@+id/tvUsername"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="13dp"
         android:layout_marginEnd="0dp"
         android:layout_marginBottom="0dp"
         tools:srcCompat="@tools:sample/avatars" />
@@ -49,4 +49,12 @@
         android:layout_marginTop="0dp"
         android:layout_marginBottom="8dp"
         tools:text="8 minutes ago" />
+
+    <ImageView
+        android:id="@+id/profilePic"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        tools:srcCompat="@tools:sample/avatars" />
 </RelativeLayout>

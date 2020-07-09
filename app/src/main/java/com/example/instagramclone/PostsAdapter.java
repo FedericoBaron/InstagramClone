@@ -28,6 +28,7 @@ import java.util.Locale;
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
 
     private static final String TAG = "PostsAdapter";
+    private static final String KEY_PROFILE_PIC = "profilePicture";
     private Context context;
     private List<Post> posts;
     private static final int SECOND_MILLIS = 1000;
@@ -84,6 +85,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private ImageView ivImage;
         private TextView tvDescription;
         private TextView timestamp;
+        private ImageView profilePic;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -92,6 +94,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ivImage = itemView.findViewById(R.id.ivImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             timestamp = itemView.findViewById(R.id.timestamp);
+            profilePic = itemView.findViewById(R.id.profilePic);
 
             // Add this as the itemView's OnClickListener
             itemView.setOnClickListener(this);
@@ -106,6 +109,15 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 Glide.with(context).load(post.getImage().getUrl()).into(ivImage);
             }
             timestamp.setText(getRelativeTimeAgo(post.getDate()));
+
+            ParseFile profile = post.getUser().getParseFile(KEY_PROFILE_PIC);
+            if(profile != null) {
+                Glide.with(context)
+                        .load(profile.getUrl())
+                        .fitCenter()
+                        .circleCrop()
+                        .into(profilePic);
+            }
         }
 
         @Override
