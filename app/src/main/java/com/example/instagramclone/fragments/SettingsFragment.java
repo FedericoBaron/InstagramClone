@@ -46,13 +46,12 @@ public class SettingsFragment extends Fragment {
     private Button btnUpdateProfile;
     private Button btnChangePassword;
 
+
     private File photoFile;
     private String photoFileName = "photo.jpg";
     private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 42;
     private static final String KEY_PROFILE_PIC = "profilePicture";
     private View view;
-//    private static final String KEY_USERNAME = "username";
-//    private static final String KEY_EMAIL = "email";
 
     public SettingsFragment() {
         // Required empty public constructor
@@ -71,6 +70,9 @@ public class SettingsFragment extends Fragment {
 
         this.view = view;
 
+        // Gets the person who's logged in
+        currentUser = ParseUser.getCurrentUser();
+
         // Connects frontend to backend
         wireUI();
 
@@ -86,19 +88,11 @@ public class SettingsFragment extends Fragment {
         // Listens for logout button click
         logoutListener();
 
-        profilePicture.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View v) {
-                launchCamera();
-            }
-
-        });
+        // Listens for profile picture click
+        updateProfilePicListener();
     }
 
     private void setProfileInfo(){
-        // Gets the person who's logged in
-        currentUser = ParseUser.getCurrentUser();
-
         // Sets info to match that user
         etUsername.setText(currentUser.getUsername());
         etEmail.setText(currentUser.getEmail());
@@ -159,6 +153,17 @@ public class SettingsFragment extends Fragment {
                 // Prevent people from going back after logging out
                 getActivity().finish();
             }
+        });
+    }
+
+    private void updateProfilePicListener(){
+
+        profilePicture.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                launchCamera();
+            }
+
         });
     }
 

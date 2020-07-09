@@ -1,5 +1,6 @@
 package com.example.instagramclone.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,11 +25,14 @@ import com.parse.ParseQuery;
 
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.parceler.Parcels;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import okhttp3.Headers;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -40,13 +44,14 @@ public class PostsFragment extends Fragment {
     private static final String TAG = "PostsFragment";
 
     private RecyclerView rvPosts;
-    protected PostsAdapter adapter;
-    protected List<Post> allPosts;
+    public static PostsAdapter adapter;
+    public static List<Post> allPosts;
     protected SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
     private LinearLayoutManager layoutManager;
     private int totalPosts = 5;
     protected static final int NEW_POSTS = 5;
+    private final int REQUEST_CODE = 20;
 
     public PostsFragment() {
         // Required empty public constructor
@@ -186,4 +191,5 @@ public class PostsFragment extends Fragment {
             }
         });
     }
+
 }

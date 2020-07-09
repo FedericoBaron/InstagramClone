@@ -14,7 +14,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.instagramclone.activities.MainActivity;
 import com.example.instagramclone.activities.PostDetailsActivity;
+import com.example.instagramclone.fragments.PostsFragment;
 import com.example.instagramclone.models.Post;
 import com.parse.ParseFile;
 
@@ -138,7 +140,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(post));
 
                 // Show the activity
-                context.startActivity(intent);
+                //context.startActivity(intent);
+                // Show the activity
+                ((MainActivity) context).startActivityForResult(intent, 9);
             }
         }
     }

@@ -30,6 +30,8 @@ public class ProfileFragment extends PostsFragment{
 
         // Sort by created at
         query.addDescendingOrder(Post.KEY_CREATED_AT);
+
+        // Finds the posts asynchronously
         query.findInBackground(new FindCallback<Post>() {
             @Override
             public void done(List<Post> posts, ParseException e) {
