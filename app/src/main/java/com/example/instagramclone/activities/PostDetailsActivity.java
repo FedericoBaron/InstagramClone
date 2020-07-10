@@ -31,6 +31,7 @@ public class PostDetailsActivity extends AppCompatActivity {
 
     private static final String KEY_LIKES = "likes";
     private static final String TAG = "PostDetailsActivity";
+    private static final String KEY_PROFILE_PIC = "profilePicture";
     private Post post;
     private TextView tvUsername;
     private ImageView ivImage;
@@ -38,6 +39,7 @@ public class PostDetailsActivity extends AppCompatActivity {
     private TextView timestamp;
     private Button like;
     private TextView likeCount;
+    private ImageView profilePic;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -66,6 +68,14 @@ public class PostDetailsActivity extends AppCompatActivity {
             Glide.with(this).load(post.getImage().getUrl()).into(ivImage);
         }
         timestamp.setText(PostsAdapter.getRelativeTimeAgo(post.getDate()));
+        ParseFile profile = post.getUser().getParseFile(KEY_PROFILE_PIC);
+        if(profile != null) {
+            Glide.with(this)
+                    .load(profile.getUrl())
+                    .fitCenter()
+                    .circleCrop()
+                    .into(profilePic);
+        }
         likeCount.setText(Integer.toString(post.getLikeCount()));
 
         // Gets the array of likes
@@ -103,6 +113,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         timestamp = findViewById(R.id.timestamp);
         like = findViewById(R.id.like);
         likeCount = findViewById(R.id.likeCount);
+        profilePic = findViewById(R.id.profilePic);
     }
 
     private void likeListener(){

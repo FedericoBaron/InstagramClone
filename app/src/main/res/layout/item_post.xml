@@ -4,17 +4,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp">
+    android:layout_margin="8dp"
+    android:gravity="center">
 
     <TextView
         android:id="@+id/tvUsername"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:layout_height="35dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="40dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="0dp"
+        android:gravity="center_vertical"
+        android:textSize="18sp"
         tools:text="Federico" />
 
     <ImageView
@@ -36,8 +40,9 @@
         android:layout_below="@+id/ivImage"
         android:layout_alignParentStart="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="8dp"
         android:layout_marginBottom="8dp"
+        android:textSize="16sp"
         tools:text="Trying to look hipster" />
 
     <TextView
@@ -49,12 +54,13 @@
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
         android:layout_marginBottom="8dp"
+        android:textSize="12sp"
         tools:text="8 minutes ago" />
 
     <ImageView
         android:id="@+id/profilePic"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         tools:srcCompat="@tools:sample/avatars" />

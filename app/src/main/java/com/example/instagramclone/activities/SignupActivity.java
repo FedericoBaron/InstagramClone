@@ -71,6 +71,7 @@ public class SignupActivity extends AppCompatActivity {
                     goMainActivity();
                     Toast.makeText(SignupActivity.this, "Success!", Toast.LENGTH_SHORT).show();
                 } else {
+                    Log.e(TAG, "Unsuccessful signup", e);
                     // Sign up didn't succeed. Look at the ParseException
                     // to figure out what went wrong
                 }

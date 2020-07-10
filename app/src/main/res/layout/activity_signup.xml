@@ -27,7 +27,7 @@
         android:layout_below="@+id/etUsername"
         android:layout_marginTop="10dp"
         android:ems="10"
-        android:hint="email (optional)" />
+        android:hint="email" />
 
     <EditText
         android:id="@+id/etPassword"
