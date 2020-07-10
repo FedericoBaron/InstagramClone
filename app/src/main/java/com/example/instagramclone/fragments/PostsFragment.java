@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 
 import com.example.instagramclone.EndlessRecyclerViewScrollListener;
 import com.example.instagramclone.models.Post;
@@ -34,11 +35,6 @@ import okhttp3.Headers;
 
 import static android.app.Activity.RESULT_OK;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link PostsFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class PostsFragment extends Fragment {
 
     private static final String TAG = "PostsFragment";
@@ -49,7 +45,8 @@ public class PostsFragment extends Fragment {
     protected SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
     private LinearLayoutManager layoutManager;
-    private int totalPosts = 5;
+    private int totalPosts = 20;
+    private ProgressBar pbLoading;
     protected static final int NEW_POSTS = 5;
     private final int REQUEST_CODE = 20;
 
@@ -68,6 +65,7 @@ public class PostsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         rvPosts = view.findViewById(R.id.rvPosts);
+        pbLoading = view.findViewById(R.id.pbLoading);
 
         // Create layout for one row in the list
         // Create the adapter
@@ -163,6 +161,9 @@ public class PostsFragment extends Fragment {
 
     // Gets posts and notifies adapter
     protected void queryPosts(){
+
+        pbLoading.setVisibility(ProgressBar.VISIBLE);
+
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
 
@@ -181,6 +182,8 @@ public class PostsFragment extends Fragment {
                 for(Post post: posts){
                     Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
                 }
+                // run a background job and once complete
+                pbLoading.setVisibility(ProgressBar.INVISIBLE);
 
                 //Now we call setRefreshing(false) to signal refresh has finished
                 swipeContainer.setRefreshing(false);

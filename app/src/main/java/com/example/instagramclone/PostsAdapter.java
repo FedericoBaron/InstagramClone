@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -88,6 +89,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView tvDescription;
         private TextView timestamp;
         private ImageView profilePic;
+        private ProgressBar pbLoading;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -97,6 +99,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvDescription = itemView.findViewById(R.id.tvDescription);
             timestamp = itemView.findViewById(R.id.timestamp);
             profilePic = itemView.findViewById(R.id.profilePic);
+            pbLoading = itemView.findViewById(R.id.pbLoading);
 
             // Add this as the itemView's OnClickListener
             itemView.setOnClickListener(this);

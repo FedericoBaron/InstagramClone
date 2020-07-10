@@ -15,7 +15,7 @@ import java.util.List;
 public class ProfileFragment extends PostsFragment{
 
     private static final String TAG = "ProfileFragment";
-    private int totalPosts = 5;
+    private int totalPosts = 20;
 
     @Override
     protected void queryPosts() {
