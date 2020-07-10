@@ -2,6 +2,7 @@ package com.example.instagramclone;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.text.format.DateUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -12,14 +13,22 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.instagramclone.activities.MainActivity;
 import com.example.instagramclone.activities.PostDetailsActivity;
+import com.example.instagramclone.fragments.OtherProfileFragment;
 import com.example.instagramclone.fragments.PostsFragment;
+import com.example.instagramclone.fragments.ProfileFragment;
 import com.example.instagramclone.models.Post;
+import com.parse.Parse;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
@@ -89,7 +98,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView tvDescription;
         private TextView timestamp;
         private ImageView profilePic;
-        private ProgressBar pbLoading;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -99,10 +107,36 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvDescription = itemView.findViewById(R.id.tvDescription);
             timestamp = itemView.findViewById(R.id.timestamp);
             profilePic = itemView.findViewById(R.id.profilePic);
-            pbLoading = itemView.findViewById(R.id.pbLoading);
 
             // Add this as the itemView's OnClickListener
             itemView.setOnClickListener(this);
+
+            profilePicListener();
+
+        }
+
+        // When someone's profile pic gets clicked you get taken to their profile
+        private void profilePicListener(){
+            profilePic.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i(TAG,"clicked on profile pic");
+                    int position = getAdapterPosition();
+                    // Make sure the position is valid i.e actually exists in the view
+                    if(position != RecyclerView.NO_POSITION) {
+                        // Get the post at the position, this won't work if the class is static
+                        Post post = posts.get(position);
+                        Bundle bundle = new Bundle();
+                        ParseUser user = post.getUser();
+                        bundle.putParcelable("user", Parcels.wrap(user));
+                        Fragment fragment = new OtherProfileFragment();
+                        fragment.setArguments(bundle);
+                        ((FragmentActivity) v.getContext()).getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.flContainer, fragment)
+                                .commit();
+                    }
+                }
+            });
         }
 
         public void bind(Post post) {
@@ -142,8 +176,6 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 // Serialize the post using the parceler, use its short name as a key
                 intent.putExtra(Post.class.getSimpleName(), Parcels.wrap(post));
 
-                // Show the activity
-                //context.startActivity(intent);
                 // Show the activity
                 ((MainActivity) context).startActivityForResult(intent, 9);
             }

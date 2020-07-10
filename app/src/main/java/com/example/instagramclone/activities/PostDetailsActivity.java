@@ -58,7 +58,7 @@ public class PostDetailsActivity extends AppCompatActivity {
         // Listens for like click
         likeListener();
 
-        // Unwrap the movie passed in via intent, using its simple name as a key
+        // Unwrap the post passed in via intent, using its simple name as a key
         post = (Post) Parcels.unwrap(getIntent().getParcelableExtra(Post.class.getSimpleName()));
 
         tvDescription.setText(post.getDescription());

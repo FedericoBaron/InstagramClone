@@ -14,7 +14,7 @@ import org.parceler.Parcels;
 
 import java.util.List;
 
-public class ProfileFragment extends PostsFragment{
+public class OtherProfileFragment extends PostsFragment{
 
     private static final String TAG = "ProfileFragment";
     private int totalPosts = 20;
@@ -26,8 +26,12 @@ public class ProfileFragment extends PostsFragment{
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
 
+        // Unwrap the user passed in via bundle, using its simple name as a key
+        user = Parcels.unwrap(getArguments().getParcelable("user"));
+
         // Only show posts that are from the user
-        query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        //query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        query.whereEqualTo(Post.KEY_USER, user);
 
 
         // Set a limit of 20 posts
@@ -60,14 +64,15 @@ public class ProfileFragment extends PostsFragment{
 
     @Override
     // Loads more posts when we reach the bottom of TL
-     protected void loadMoreData() {
+    protected void loadMoreData() {
         Log.i(TAG, "Loading more data");
         totalPosts = totalPosts + NEW_POSTS;
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         query.include(Post.KEY_USER);
 
         // Only show posts that are from the user
-        query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        //query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
+        query.whereEqualTo(Post.KEY_USER, user);
 
         // Set a limit
         query.setLimit(totalPosts);
