@@ -30,9 +30,7 @@ public class OtherProfileFragment extends PostsFragment{
         user = Parcels.unwrap(getArguments().getParcelable("user"));
 
         // Only show posts that are from the user
-        //query.whereEqualTo(Post.KEY_USER, ParseUser.getCurrentUser());
         query.whereEqualTo(Post.KEY_USER, user);
-
 
         // Set a limit of 20 posts
         query.setLimit(totalPosts);

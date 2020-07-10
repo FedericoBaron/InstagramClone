@@ -111,6 +111,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             // Add this as the itemView's OnClickListener
             itemView.setOnClickListener(this);
 
+            // Listens for click of another user's profile
             profilePicListener();
 
         }
